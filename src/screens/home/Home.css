@@ -72,4 +72,41 @@ display: none;
 }
 .dispComment {
   display:block;
+  color: black;
+  font-size: 16px;
 }
+MuiTypography-root.MuiTypography-body1{
+  color: black;
+  font-size: 20px;
+}
+.black {
+  color: none;
+  cursor: pointer;
+}
+.red {
+  color: red;
+  cursor: pointer;
+}
+.userNameSpan{
+font-weight: bolder;
+font-size:16px;
+}
+
+.commenttext{
+  color:black;
+  font-size:15px;
+  }
+
+  .noLike{
+    color:black;
+  }
+
+  .Liked{
+    color:red;
+  }
+  .likeCount{
+    font-size:20px;
+    display:inline-block;
+    margin-left: 2px;
+  }
+  

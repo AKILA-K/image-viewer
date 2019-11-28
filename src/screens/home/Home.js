@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './Home.css';
-import Header from '../../common/Header';
+import Header from '../../common/header/Header';
 import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import { withStyles } from '@material-ui/core/styles';
+//import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -17,7 +17,9 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
+//import hearticon from '../../assets/hearticon.svg';
 
 
 const styles = theme => ({
@@ -46,60 +48,208 @@ class Home extends Component {
 
     constructor() {
         super();
+      //  this.addCommentOnClickHandler = this.addCommentOnClickHandler.bind(this);
         this.state = {
-            userphotos: [],
-            ownerInfo:{
-                username: "upgrad_sde"
-            },
+            userphotos:null,
+            matchingsearch:null,
+            searched:"NO",
+            username:"",
+           /* ownerInfo:{
+                username: ""
+                },*/
             comment:"",
-            addComment:"dispComment"
+            addComment:"dispComment",
+            loggedIn:'false',
+            hasError:false,
+            accessToken:'',
+        }
+        this.singleUserUrl = "https://api.instagram.com/v1/users/self/?access_token=";
+        this.access_token=sessionStorage.getItem("access-token")
+    }
+    searchboxfunction = (e) => {
+
+        const searchkey = (e.target.value).toLowerCase();
+        let posts = this.state.userphotos;
+        let matchingsearch = [];
+        if(posts !== null && posts.length > 0){
+        matchingsearch = posts.filter((post) => 
+        (post.caption.text.split(/\#/)[0].toLowerCase()).indexOf(searchkey) > -1 );
+        this.setState({
+                   matchingsearch: matchingsearch,
+                   searched:"YES"
+        });
+       }
+
+    }
+
+    heartClickHandler = (photoId, photoLikeIndex) => {
+
+
+        let photolistlike = this.state.userphotos;
+        let matchingsearchlike = this.state.matchingsearch;
+
+
+        if(photolistlike !== null && photolistlike.length > 0){
+
+            // Updating main array
+            let postWithLike =  photolistlike.map((photoPostlike,photoIndex) => {
+                if(photoPostlike.id === photoId){
+                    if (photoPostlike.user_has_liked) {
+                        photoPostlike.user_has_liked = false;
+                        photoPostlike.likes.count = (photoPostlike.likes.count) + 1;
+                    } else {
+                        photoPostlike.user_has_liked = true;
+                        photoPostlike.likes.count = (photoPostlike.likes.count) - 1;
+                    }
+                } else {}
+                return photoPostlike;
+            });
+            
+             //  Search key matching array
+            if(matchingsearchlike !== null && matchingsearchlike.length > 0) {
+               //Logic to be reversed if search function is triggered. Otherwise it overwrites it's own values
+            if(this.state.searched==="NO"){
+                if(matchingsearchlike[photoLikeIndex].user_has_liked ) {
+                    
+                    matchingsearchlike[photoLikeIndex].user_has_liked = false;
+                    matchingsearchlike[photoLikeIndex].likes.count = (matchingsearchlike[photoLikeIndex].likes.count) + 1;
+                } else {
+                    matchingsearchlike[photoLikeIndex].user_has_liked = true;
+                    matchingsearchlike[photoLikeIndex].likes.count = (matchingsearchlike[photoLikeIndex].likes.count) - 1;
+                }
+            } else {
+                if(matchingsearchlike[photoLikeIndex].user_has_liked===false) {
+                    
+                    matchingsearchlike[photoLikeIndex].user_has_liked = false;
+                    matchingsearchlike[photoLikeIndex].likes.count = (matchingsearchlike[photoLikeIndex].likes.count);
+                } else {
+                    matchingsearchlike[photoLikeIndex].user_has_liked = true;
+                    matchingsearchlike[photoLikeIndex].likes.count = (matchingsearchlike[photoLikeIndex].likes.count);
+                }
+            }
+            }
+            this.setState({
+                userphotos: postWithLike,
+                matchingsearch:matchingsearchlike
+            });
+       }
+    }
+
+    addCommentOnClickHandler = (photoId, photoIndex) => {
+      //  alert((this.title).childNodes[0].value);
+        const inputcomment = document.getElementById('comment'+photoId).value;
+        
+        if (inputcomment === '') {
+            return;
+        } else {
+            let photolist = this.state.userphotos;
+            if(photolist !== null && photolist.length > 0){
+            
+        //    alert(photolist);
+        //  Main array update
+            let postsWithComment =  photolist.map((photoPost,index) => {
+                if(photoPost.id === photoId){
+                    photoPost.comments['data'] = photoPost.comments['data'] || [];
+                    photoPost.comments['data'].push({
+                        id: (photoPost.comments['data'].length + 1),
+                        commentUser: this.state.username,
+                        commentInput: inputcomment
+                    });
+                }
+                return photoPost;
+            });
+
+        //  Search key matching array
+            let matchingsearch = this.state.matchingsearch;
+//No need to run this if search function is triggered. Otherwise it creates duplicate entries
+if(this.state.searched==="NO"){
+if(matchingsearch!==null && matchingsearch.length>0){
+                matchingsearch[photoIndex].comments['data'] = matchingsearch[photoIndex].comments['data'] || [];
+                matchingsearch[photoIndex].comments['data'].push({
+                        id: (matchingsearch[photoIndex].comments['data'].length + 1) ,
+                        commentUser: this.state.username,
+                        commentInput: inputcomment
+                });
+        } }else {
+           
+        }
+
+                        this.setState({
+                            userphotos: postsWithComment,
+                            matchingsearch:matchingsearch
+                        });
+     //   alert(this.state.userphotos);
+    //    innerspan.innerText= innerspan.innerText + "\n"+ "\n"+ username+": "+inputcomment.value;
+        document.getElementById('comment'+photoId).value="";
         }
     }
-
-    iconClickHandler = (e) => {
-        this.setState({
-            backgroundColor: 'red'
-        })
     }
-
-    commentOnChangeHandler = (e) => {
-        this.setState({comment: e.target.value});
-    }
-
-    addCommentOnClickHandler = (e) => {
-        this.setState({addedComment :this.state.comment});
-
-    }
-
 
     componentWillMount() {
-      let data = null;
-        let baseUrl="https://api.instagram.com/v1/users/self/media/recent?access_token=";
+        let data = null;
+        let singledata=null;
+        let baseUrl=this.props.baseUrl;
         let xhr = new XMLHttpRequest();
+        let singlexhr = new XMLHttpRequest();
         let that = this;
-        let access_token=this.props.access;
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                that.setState({
-                    userphotos: JSON.parse(this.responseText).data
-                });
-            }
-        });
+        let access_token = this.access_token;
+        let accessToken = '';
+        let loggedIn = false;
+        
+        // Redirecting to login page if not logged in    
+try{
+    accessToken = this.props.history.location.state.accessToken;
+    loggedIn = this.props.history.location.state.loggedIn;
+    } catch(exception){
+    this.props.history.push({pathname:'/'});
+    }
 
-       // xhr.open("GET", baseUrl + access_token);
-       xhr.open("GET", baseUrl + '8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784');
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.send(data);
+    let profiledata = null;
+    let xhrprofiledata = new XMLHttpRequest();
+    xhrprofiledata.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+        that.setState({
+            username: JSON.parse(this.responseText).data.username
+        }); 
+    }
+    });
+    xhrprofiledata.open("GET", this.singleUserUrl + this.access_token);
+    //xhrUserProfile.setRequestHeader("Cache-Control", "no-cache");
+    xhrprofiledata.send(xhrprofiledata);
+
+	// Getting data from API if logged in
+	if(this.access_token===accessToken && loggedIn===true){
+        that.setState({
+            loggedIn: 'true'
+            });
+        xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+        that.setState({
+        userphotos: JSON.parse(this.responseText).data,
+        matchingsearch: JSON.parse(this.responseText).data
+        });
+        }
+        });
+        xhr.open("GET", baseUrl+access_token);
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(data);        
+    } else {
+    this.props.history.push({pathname:'/'});
+    }
     }
 
 render(){
    // const { classes } = this.props;
-   
+   const DATE_OPTIONS= {day:'numeric', month:'numeric', year:'numeric'}
     return(<div>
-        <div><Header heading="Image Viewer" searchDisplay="dispSearch" iconDisplay="dispBlock" onClick/></div>
+               <div>
+                   <Header heading="Image Viewer" noSearchBox="box" baseUrl={this.props.baseUrl}
+                loggedIn={this.state.loggedIn} searchenable={this.searchboxfunction}accc={this.access_token} prof={this.singleUserUrl}
+                searchDisplay="dispSearch" iconDisplay="dispBlock" /></div>
+
         <div className= "homeBody">
         <GridList cellHeight={"auto"}  cols={2}>
-        {this.state.userphotos.map(photo=>(
+        {(this.state.matchingsearch || []).map((photo,index)=>(
             <GridListTile key={"grid" + photo.id} cols={photo.cols|| 1}>
                 <Grid container className={classes.root} spacing={10}>
                     <Grid item>
@@ -110,8 +260,9 @@ render(){
                                     <img src={logo}/>
                                     </Avatar>
                               }
-                                title={this.state.ownerInfo.username}
-                                subheader={photo.created_time}
+                                title={photo.caption.from.username}
+                             //   subheader={ moment(photo.caption.created_time,"x").format("DD MMM YYYY hh:mm a")}
+                             subheader={moment.unix(photo.caption.created_time).format("DD/MM/YYYY HH:mm:ss")}
                     />
                     <CardContent>
                             <img src={photo.images.low_resolution.url} alt={photo.caption.text} className="imageProp" />
@@ -121,31 +272,46 @@ render(){
                             <br></br>
                             <br></br>
                             <div className="likesProp">
-                               <Typography variant="h5" >
-                                    <FavoriteBorderIcon onClick={() => this.iconClickHandler} />
-                                     {photo.likes.count} Likes</Typography></div>
-                                    <br /><br />
+                                <Typography variant="h5" >
+                                {photo.user_has_liked ? 
+                                                    <FavoriteBorder className="noLike" 
+                                                                    onClick={this.heartClickHandler.bind(this, photo.id, index)} 
+                                                    />
+                                                    :
+                                                    <Favorite className="Liked" 
+                                                              onClick={this.heartClickHandler.bind(this, photo.id, index)} 
+                                                    />                                                                                                       
+                                                }</Typography>
+                                                <div className="likeCount">
+                                                   <span >{(photo.likes.count)} likes</span>
+                                                    </div>
+                                            </div>
+                                           <div>
+                                           <Grid >
+	                                        <Grid >
+		                                        {(photo.comments.data || []).map((comment) => {
+			                                    return <Typography key={comment.id}>
+				                                            <span className="userNameSpan"><b>{comment.commentUser} :</b></span><span className="commenttext"> {comment.commentInput}</span>
+                                                        </Typography>
+                                                })}
+                                            </Grid>
+                                        </Grid> 
                                 <FormControl >
-                                    <FormHelperText className={this.state.addComment}><Typography> {this.state.addedComment}</Typography></FormHelperText>
-                                </FormControl> <br></br>
-                                <FormControl>
+                                    <FormHelperText id={'formhelper'+photo.id}className={this.state.addComment}><span id={"innerspan"+photo.id} ></span></FormHelperText>
+                                </FormControl> <br></br>  <br></br>
+                                <FormControl>   
                                     <InputLabel htmlFor="comment">Add a Comment</InputLabel>
-                                     <Input id="comment" type="text" onChange={this.commentOnChangeHandler} />
+                                     <Input id={"comment"+photo.id} type="text"  />
                                 </FormControl>
-                                    <Button id="addedcomment" variant="contained" color="primary" onClick={this.addCommentOnClickHandler}>ADD</Button>
-                                
-
+                                    <Button id={"addcomment"+photo.id} variant="contained" color="primary" onClick={this.addCommentOnClickHandler.bind(this,photo.id,index)}>ADD</Button>
+                                </div>
                     </CardContent>
-
-
                     </Card>
-
                     </Grid>
                 </Grid>         
                 
             )</GridListTile> ))}
             </GridList>
-
         </div>              
     </div>) 
 }

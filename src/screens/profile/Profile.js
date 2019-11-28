@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Profile.css';
-import Header from '../../common/Header';
+import Header from '../../common/header/Header';
 
 //Material-UI Components
 import Avatar from "@material-ui/core/Avatar";
@@ -20,6 +20,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
+import { classes } from 'istanbul-lib-coverage';
 
 const styles = theme => ({
   bigAvatar: {
@@ -68,7 +69,7 @@ constructor(props) {
         follows: 0,
         followed_by: 0,
         full_name: "",
-        userPosts: null,
+        userPosts: [],
         editNameOpen: false,
         fullnameRequired: "dispNone",
         selectedPost: null,
@@ -89,14 +90,13 @@ componentWillMount() {
         let accessToken='';
 // Redirecting to login page if not logged in        
       try{
-            accessToken = this.props.location.state.accessToken;
-            loggedIn = this.props.location.state.loggedIn; 
-        } catch(exception){
-            this.props.history.push({pathname:'/'});
-        }
+      accessToken = this.props.location.state.accessToken;
+      loggedIn = this.props.location.state.loggedIn; 
+   } catch(exception){
+   this.props.history.push({pathname:'/'});
+ }
 // Getting data from API if logged in
    if(access_token===accessToken && loggedIn==='true'){
-      // Gets User Profile 
       xhr_UserProfile.addEventListener("readystatechange", function () {
           if (this.readyState === 4) {
                 const data = JSON.parse(this.responseText).data;
@@ -109,9 +109,10 @@ componentWillMount() {
                     followed_by: data.counts.followed_by,
                     full_name: data.full_name
                 });
+                
           }
       });
-      xhr_UserProfile.open("GET", baseUrl + "users/self/?access_token=" + access_token);
+      xhr_UserProfile.open("GET", this.singleUserUrl + access_token);
       xhr_UserProfile.setRequestHeader("Cache-Control", "no-cache");
       xhr_UserProfile.send(data_UserProfile);
 
@@ -119,12 +120,15 @@ componentWillMount() {
       let data_UserPosts = null;
       let xhr_UserPosts = new XMLHttpRequest();
       xhr_UserPosts.addEventListener("readystatechange", function() {
+
       if (this.readyState === 4) {
-        const data = JSON.parse(this.responseText).data;
-        that.setState({ userPosts: [...data] });
+        that.setState({ 
+          userPosts:JSON.parse(this.responseText).data
+         });
+         
       }
       });
-    xhr_UserPosts.open("GET",this.props.baseUrl +"users/self/media/recent?access_token=" +access_token);
+    xhr_UserPosts.open("GET",this.props.baseUrl+access_token);
     //xhrUserPosts.setRequestHeader("Cache-Control", "no-cache");
     xhr_UserPosts.send(data_UserPosts);
   }  
@@ -264,7 +268,7 @@ render(){
         <Container fixed>
           <Grid container spacing={3} alignItems="center" style={{ justifyContent: "center" }} >
             <Grid item>
-                <Avatar alt={this.state.username} src={this.state.profile_picture} className={classes.bigAvatar} />
+                <Avatar className={classes.bigAvatar} alt={this.state.username} src={this.state.profile_picture} className={classes.bigAvatar} />
             </Grid>
 
           <Grid item><Typography variant="h6" component="h6"> {this.state.username} </Typography>
@@ -296,7 +300,7 @@ render(){
            
 
           <GridList cellHeight={320} cols={3}>
-            {(this.state.userPosts || []).map((post, index) => (
+            {this.state.userPosts.map((post, index) => (
               <GridListTile key={post.id} className="grid-content"
                onClick={() => this.ClickPostImageHandler(post.id, index)}
               >
@@ -385,4 +389,4 @@ render(){
 }
 
 export default withStyles(styles)(Profile);
-3
+
