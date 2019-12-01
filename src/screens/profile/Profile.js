@@ -33,7 +33,6 @@ const styles = theme => ({
   fab: {
     width:50
   },
-  
   paper: {
     position: "absolute",
     width: '100%',
@@ -44,7 +43,6 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)'
   },
-  
   paper_big: {
     position: "absolute",
     width: '50%',
@@ -56,8 +54,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
   }
-  
-  
+   
 });
 
 class Profile extends Component {
@@ -96,16 +93,16 @@ componentWillMount() {
         let access_token = sessionStorage.getItem("access-token");
         let loggedIn = '';
         let accessToken='';
-// Redirecting to login page if not logged in        
+      // Redirecting to login page if not logged in        
       try{
-      accessToken = this.props.history.location.state.accessToken;
-      loggedIn = this.props.history.location.state.loggedIn; 
-   } catch(exception){
-   this.props.history.push({pathname:'/'});
- }
-// Getting data from API if logged in
-   if(access_token===accessToken && loggedIn==='true'){
-      xhr_UserProfile.addEventListener("readystatechange", function () {
+           accessToken = this.props.history.location.state.accessToken;
+           loggedIn = this.props.history.location.state.loggedIn; 
+      } catch(exception){
+           this.props.history.push({pathname:'/'});
+      }
+      // Getting data from API if logged in
+      if(access_token===accessToken && loggedIn==='true'){
+          xhr_UserProfile.addEventListener("readystatechange", function () {
           if (this.readyState === 4) {
                 const data = JSON.parse(this.responseText).data;
                 that.setState({
@@ -117,8 +114,7 @@ componentWillMount() {
                     followed_by: data.counts.followed_by,
                     full_name: data.full_name
                 });
-                
-          }
+         }
       });
       xhr_UserProfile.open("GET", this.singleUserUrl + access_token);
       xhr_UserProfile.setRequestHeader("Cache-Control", "no-cache");
@@ -136,16 +132,16 @@ componentWillMount() {
          
       }
       });
-    xhr_UserPosts.open("GET",this.props.baseUrl+access_token);
-    //xhrUserPosts.setRequestHeader("Cache-Control", "no-cache");
-    xhr_UserPosts.send(data_UserPosts);
-  }  
-  else {
-   this.props.history.push({pathname:'/'});
-  }
-}
+      xhr_UserPosts.open("GET",this.props.baseUrl+access_token);
+      //xhrUserPosts.setRequestHeader("Cache-Control", "no-cache");
+      xhr_UserPosts.send(data_UserPosts);
+      }  
+      else {
+        this.props.history.push({pathname:'/'});
+      }
+   }
 
-
+//To Edit FullName Open Modal-onClick() Method
 EditFullNameModalOpenHandler = () => {
     this.setState({
       updateFullName: this.state.full_name,
@@ -153,6 +149,7 @@ EditFullNameModalOpenHandler = () => {
     });
   };
 
+//To Edit FullName Close Modal-onClick() Method
 EditFullNameModalCloseHandler = () => {
     this.setState({
       editNameOpen: false,
@@ -160,10 +157,8 @@ EditFullNameModalCloseHandler = () => {
     });
   };
 
-  
-  
-  
-  ClickUpdateNameHandler = () => {
+//To Update FullName Open Modal-onClick() Method
+ClickUpdateNameHandler = () => {
     this.state.updateFullName === ""
       ? this.setState({ fullnameRequired: "dispBlock" })
       : this.setState({ fullnameRequired: "dispNone" });
@@ -177,13 +172,13 @@ EditFullNameModalCloseHandler = () => {
     });
   };
 
-  
-  ChangeFullNameHandler = e => {
+ //To Update FullName Open Modal-onChange() Method 
+ChangeFullNameHandler = e => {
     this.setState({ updateFullName: e.target.value });
   };
 
-  
-  ClickPostImageHandler = (_id, _index) => {
+//Open post Image-onClick() Method  
+ClickPostImageHandler = (_id, _index) => {
     let _userPostItems = this.state.userPosts;
     this.setState({
       selectedPost: _userPostItems[_index],
@@ -193,8 +188,8 @@ EditFullNameModalCloseHandler = () => {
     });
   };
 
-  
-  ClickPostImageCloseHandler = () => {
+//Close post Image-onClick() Method  
+ClickPostImageCloseHandler = () => {
     this.setState({
       selectedPost: null,
       postOpen: false,
@@ -202,8 +197,8 @@ EditFullNameModalCloseHandler = () => {
     });
   };
 
-  
-  ClickLikesHandler = () => {
+//Like Function - onClick() Method  
+ ClickLikesHandler = () => {
     let _selectedPostItem = this.state.selectedPost;
     let _userPosts = this.state.userPosts;
     const _selectedIndex = this.state.selectedIndex;
@@ -224,6 +219,7 @@ EditFullNameModalCloseHandler = () => {
   };
 
 
+//Redirects to home page
   redirecting =()=>{
    let accessToken = sessionStorage.getItem("access-token");
 			//Route to home here  
@@ -231,6 +227,7 @@ EditFullNameModalCloseHandler = () => {
 				, loggedIn:true}});
 }
 
+//Redirects to login if not logged in
   loginredirect=()=>{
     sessionStorage.removeItem("access-token");
     this.setState({
@@ -239,11 +236,12 @@ EditFullNameModalCloseHandler = () => {
     this.props.history.push({pathname:'/'});
 }
 
+ //Inputs Add Comment field - onClick() Method
   inputAddCommentHandler = e => {
     this.setState({ newComment: e.target.value });
   };
 
-  
+ //Add Comment Handler 
   AddCommentHandler = () => {
     if (this.state.newComment === "") {
       return;
