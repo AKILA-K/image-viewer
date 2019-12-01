@@ -5,6 +5,7 @@
   .min-height-comments-box {
     min-height: 50px;
     margin-bottom: 20px;
+    word-wrap: break-word;
   }
   
   .grid-content {
@@ -16,6 +17,67 @@
     cursor: pointer;
   }
   .greyLike {
-    color: grey;
+    color: black;
     cursor: pointer;
   }
+
+  .userNameEdit{
+    height:20% !important;
+  }
+
+  .MuiGridListTile-tile{
+    display:flex !important;
+    flex-direction:row !important;
+    margin:5px !important;
+  }
+/*
+  .MuiGridList-root{
+    width:100% !important;
+    height:100%  !important;
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+  }
+  */
+  .MuiGridListTile-imgFullWidth{
+    width:98% !important;
+  }
+
+  .MuiTypography-root.MuiTypography-caption.MuiTypography-displayBlock{
+    width:100% !important;
+    word-break: break-all;
+  }
+  
+.gridContainer{
+  height:100% !important;
+  display:flex;
+  flex-direction: row;
+}
+
+  .gridItem{
+    height:100% !important; 
+  }
+
+  .innercommentbox{
+    display: flex;
+    flex-direction: row;
+    width:100% !important;
+  }
+
+  .commentinputbox{
+    display: inline-block;
+    width:110% !important;
+    margin-right: 2% !important;
+  }
+  
+  .addcommentbutton{
+    display: inline-block;
+    width:25%;
+  }
+
+.tagSize{
+  font-size: 16px !important;
+}
+
+.gridUserDetails{
+  width:40% !important;
+}

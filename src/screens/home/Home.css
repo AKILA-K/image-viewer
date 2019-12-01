@@ -1,62 +1,59 @@
-.header{
-  background-color: #263238;
-  color:#fff;
-  text-transform: uppercase;
-  font-weight:bold;
-  font-size:18px;
-  display:flex;
-  flex-direction: row;
-}
-.header-text{
-  padding-top:20px;
-  padding-bottom:20px;
-  display:inline-block;
-  width:60%;
-}
-.dispNone {
-  display:none;
-}
-.noSearchBox {
-display: none;
-}
 .dispSearch {
   padding-top:20px;
   text-align: right;
   width:37%
 }
-.dispIcon{
-  display: inline-block;
-  widows: 3%;
+/*
+/*MuiGridListTile-tile*/
+.HomeGridListTile{
+  overflow: visible !important;
+  width:50% !important;
+  margin-top: 20px;
 }
-.searchDisplay{
-  border-radius: 4px;
-  width: 300px;
-  background-color: #c0c0c0;
-  margin: 10px;
-  text-align: left;
+
+.HomeGridListRoot{
+  display: block;
+  justify-content: left;
+  padding-left: 9% !important;
+  padding-right: 8% !important;
 }
-.searchIcon{
-  display: inline-block;
-  color: black;
+
+/*
+MuiPaper-root.MuiPaper-elevation1.MuiCard-root.MuiPaper-rounded
+.cardRoot{
+  width:95% !important;
+}
+
+/*.MuiPaper-elevation1
+.cardRoot.MuiPaper-elevation1 {
+  box-shadow: 2px 5px 10px #888888 !important;
+}
+
+.MuiGrid-root.Home-root-1.MuiGrid-container
+.gridContainerRoot{
+  display: block;
+  justify-content: center;
+}
+
+/*.MuiCardContent-root{
+.cardContentRoot{
+  height:100% !important;
+}
+*/
+/*
+.MuiGrid-root.Home-innerroot-3.MuiGrid-item
+*/
+.gridItemRoot{
+  height:800 !important;
+  width: 102% !important;
 }
 .imageProp{
-  display:flex;
-  justify-content: center;
-  padding: 20px;
-  width: 'auto';
-  height:'auto';
+display:flex;
+padding-left:2%;
+width:75% !important;
+  }
 
-}
-.cardHeader {
-  display:flex;
-  float:flex-start;
-}
-.cardContent {
-  display:flex;
-  justify-content: center;
-
-}
-.likesProp {
+  .likesProp {
   font-size: 40px;
   display:flex;
   justify-content: flex-start;
@@ -75,38 +72,92 @@ display: none;
   color: black;
   font-size: 16px;
 }
-MuiTypography-root.MuiTypography-body1{
-  color: black;
-  font-size: 20px;
-}
+
 .black {
   color: none;
   cursor: pointer;
 }
-.red {
-  color: red;
+
+.noLike{
+    color:black;
+    cursor: pointer;
+}
+.Liked{
+  color:red;
   cursor: pointer;
 }
+.likeCount{
+  font-size:20px;
+  display:inline-block;
+  margin-left: 2px;
+}
+
 .userNameSpan{
-font-weight: bolder;
-font-size:16px;
+  font-weight: bolder;
+  font-size:16px;
 }
 
 .commenttext{
   color:black;
   font-size:15px;
-  }
+  word-break: break-all;
+}
 
-  .noLike{
-    color:black;
-  }
+.innercommentbox{
+  display: flex;
+  flex-direction: row;
+}
 
-  .Liked{
-    color:red;
-  }
-  .likeCount{
-    font-size:20px;
-    display:inline-block;
-    margin-left: 2px;
-  }
-  
+.commentinputbox{
+  display: inline-block;
+  width:80% !important;
+  margin-right: 2% !important;
+}
+
+.addcommentbutton{
+  display: inline-block;
+  width:12%;
+}
+
+.MuiTypography-root.MuiTypography-body1{
+  color: black;
+  font-size: 20px;
+}
+.cardHeader {
+  display:flex;
+  float:flex-start;
+}
+.cardContent {
+  display:flex;
+  justify-content: center;
+}
+
+.MuiGridListTile-tile{
+  overflow: visible !important;
+  width:102% !important;
+  margin-top: 20px;
+}
+.MuiGridListTile-root.Home-gridtile-4{
+  display: block;
+}
+
+.MuiPaper-root.MuiPaper-elevation1.MuiCard-root.MuiPaper-rounded{
+  width:95% !important;
+}
+
+.MuiPaper-elevation1 {
+  box-shadow: 2px 5px 10px #888888 !important;
+}
+
+.MuiGrid-root.Home-root-1.MuiGrid-container{
+  display: block;
+  justify-content: center;
+}
+
+.MuiCardContent-root{
+  height:100% !important;
+}
+.MuiGrid-root.Home-innerroot-3.MuiGrid-item{
+  height:800 !important;
+}
+

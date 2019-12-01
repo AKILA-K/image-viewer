@@ -9,8 +9,8 @@
     height:80px;
     align-items: center ;
     flex-grow: 1;
-    text-transform:none;    
     }
+    
     .header-text{
     display:inline-block;
     width:60%;
