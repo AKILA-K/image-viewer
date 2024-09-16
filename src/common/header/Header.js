@@ -75,13 +75,7 @@ this.searchData='';
 serachInputHandler = (e) => {
       this.searchData= e.target.value;
 }
-logoutHandler = () => {
-      sessionStorage.removeItem("access-token");
-      this.setState({
-          loggedIn: false
-      });
-  }
- 
+
   openMenuHandler = () => {
      
       this.setState({
@@ -98,6 +92,7 @@ logoutHandler = () => {
 
 componentWillMount() {
 // Get owner info after authenticating the  accessToken generated 
+    try{
 let ownerData = null;
 let xhr = new XMLHttpRequest();
 let that = this;
@@ -109,13 +104,19 @@ ownerInfo_self: JSON.parse(this.responseText).data
 }
 })
 xhr.open("GET", this.props.prof+this.props.accc);
-xhr.send(ownerData);
+xhr.send(ownerData);} catch (exception) {
+    // do nothing
+}
 }
 
 render(){
 return (<div className='header'>
 
-<span className="header-text">{this.props.heading}</span>
+<span className="header-text">
+{this.props.iconDisplay==="dispNone"?<span>{this.props.heading}</span>:
+<span onClick={this.props.homeredirect}>{this.props.heading}</span>
+}
+    </span>
 
 <div className={this.props.searchDisplay}>
 <span className={this.props.noSearchBox}>
@@ -132,20 +133,20 @@ return (<div className='header'>
 <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={this.openMenuHandler} src={this.state.ownerInfo_self.profile_picture} alt="profile-icon">
 </Avatar>
 <div >
-                            <Menu 
-                                id="simple-menu"
-                                keepMounted
-                                open={this.state.menuIsOpen}
-                                onClose={this.closeMenuHandler}
-                                anchorReference="anchorPosition"
-                                anchorPosition={{ top: 64, left:1560}}
-                            >
-                                <Link to={{pathname: '/profile/',state:{baseUrl:this.props.baseUrl,accessToken:this.props.accc,loggedIn:this.props.loggedIn}}}>
-                                    <MenuItem >My Account</MenuItem></Link><hr />
-                                <Link to='/'>
-                                    <MenuItem onClick={this.logoutHandler}>Logout</MenuItem></Link>
-                            </Menu>
-                        </div>
+                <Menu 
+                    id="simple-menu"
+                    keepMounted
+                    open={this.state.menuIsOpen}
+                    onClose={this.closeMenuHandler}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{ top: 62, left:2000}}
+                >
+                    {this.props.noSearchBox ==="box" ?
+                    
+                       <span> <MenuItem onClick={this.props.profileredirect}>My Account</MenuItem><hr/></span>:""}
+                        <MenuItem onClick={this.props.logoutHandler}>Logout</MenuItem>
+                </Menu>
+            </div>
 </div>
 </div>
 
