@@ -1,0 +1,152 @@
+/*Search box properties*/
+.dispSearch {
+  padding-top:20px;
+  text-align: right;
+  width:37%
+}
+
+
+/*Display alignment size properties of the Grid*/
+.HomeGridListTile{
+  overflow: visible !important;
+  width:50% !important;
+  margin-top: 20px;
+}
+
+.HomeGridListRoot{
+  display: block;
+  justify-content: left;
+  padding-left: 9% !important;
+  padding-right: 8% !important;
+}
+
+.imageTitle{
+  font-size: 20px;
+}
+.gridItemRoot{
+  height:800 !important;
+  width: 102% !important;
+}
+
+
+/*Card container properties*/
+.cardHeader {
+  display:flex;
+  float:flex-start;
+}
+.cardContent {
+  display:flex;
+  justify-content: center;
+}
+
+.imageProp{
+  display:flex;
+  padding-left:2%;
+  width:75% !important;
+    }
+    
+  .likesProp {
+    font-size: 40px;
+    display:flex;
+    justify-content: flex-start;
+    vertical-align: center;
+  }
+  .image-Text{
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .hash-tags {
+    font-size: 20px;
+    color: #5cc1dd;
+  }
+
+/*Like icon and text properties*/
+.black {
+  color: none;
+  cursor: pointer;
+}
+
+.noLike{
+    color:black;
+    cursor: pointer;
+}
+.Liked{
+  color:red;
+  cursor: pointer;
+}
+.likeCount{
+  font-size:20px;
+  display:inline-block;
+  margin-left: 2px;
+}
+
+
+/*Add comment and display added comments properties*/
+.userNameSpan{
+  font-weight: bolder;
+  font-size:20px;
+}
+
+.commenttext{
+  color:black;
+  font-size:20px;
+  word-break: break-all;
+}
+
+.innercommentbox{
+  display: flex;
+  flex-direction: row;
+}
+
+.commentinputbox{
+  display: inline-block;
+  width:80% !important;
+  margin-right: 2% !important;
+}
+
+.addcommentbutton{
+  display: inline-block;
+  width:12%;
+}
+
+.dispComment {
+  display:block;
+  color: black;
+  font-size: 16px;
+}
+
+/*Manipulated the common MUI propertie to achieve desired display results*/
+.MuiTypography-root.MuiTypography-body1{
+  color: black;
+  font-size: 20px;
+}
+
+.MuiGridListTile-tile{
+  overflow: visible !important;
+  width:102% !important;
+  margin-top: 20px;
+}
+.MuiGridListTile-root.Home-gridtile-4{
+  display: block;
+}
+
+.MuiPaper-root.MuiPaper-elevation1.MuiCard-root.MuiPaper-rounded{
+  width:95% !important;
+}
+
+.MuiPaper-elevation1 {
+  box-shadow: 2px 5px 10px #888888 !important;
+}
+
+.MuiGrid-root.Home-root-1.MuiGrid-container{
+  display: block;
+  justify-content: center;
+}
+
+.MuiCardContent-root{
+  height:100% !important;
+}
+.MuiGrid-root.Home-innerroot-3.MuiGrid-item{
+  height:800 !important;
+}
+

@@ -1,0 +1,108 @@
+/*Image,like, comment modal properties*/
+.modal-heading {
+    margin-bottom: 16px !important;
+  }
+
+  .min-height-comments-box {
+    min-height: 140px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+  }
+
+  .modalRule{
+    background-color: grey;
+    width:100%;
+    height:0.7px;
+  }
+
+/*Main grid display properties*/  
+  .gridContainer{
+    height:100% !important;
+    display:flex;
+    flex-direction: row;
+  }
+  
+    .gridItemImage{
+      height:100% !important;
+    }
+    .gridItemComments{
+      height:100% !important;
+    }
+  .grid-content {
+    cursor: pointer;
+  }
+  
+.gridUserDetails{
+  width:40% !important;
+}
+
+.tagSize{
+  font-size: 16px !important;
+}
+
+.imageDisplay{
+  width:100%;
+  height:400px !important; 
+}
+
+/*Add comment and display added comment box properties*/
+  .innercommentbox{
+    display: flex;
+    flex-direction: row;
+    width:100% !important;
+  }
+
+  .commentinputbox{
+    display: inline-block;
+    width:110% !important;
+    margin-right: 2% !important;
+  }
+  
+  .addcommentbutton{
+    display: inline-block;
+    width:25%;
+  }
+
+.addedComments{
+  word-break: break-all;
+}
+  
+  /*Like button and text properties*/
+  .redLike {
+    color: red;
+    cursor: pointer;
+  }
+  .greyLike {
+    color: black;
+    cursor: pointer;
+  }
+
+/*User name edit option and modal properties*/
+  .userNameEdit{
+    height:20% !important;
+  }
+
+/*Manipulated the common MUI propertie to achieve desired display results*/
+  .MuiGridListTile-tile{
+    display:flex !important;
+    flex-direction:row !important;
+    margin:5px !important;
+  }
+/*
+  .MuiGridList-root{
+    width:100% !important;
+    height:100%  !important;
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+  }
+  */
+  
+  .MuiGridListTile-imgFullWidth{
+    width:98% !important;
+  }
+
+  .MuiTypography-root.MuiTypography-caption.MuiTypography-displayBlock{
+    width:100% !important;
+    word-break: break-all;
+  }
+  

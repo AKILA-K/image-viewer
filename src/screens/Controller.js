@@ -9,19 +9,15 @@ class Controller extends Component {
 
   constructor() {
     super();
-    this.baseUrl = "http://localhost:8085/api/v1/";
+    this.baseUrl = "https://api.instagram.com/v1/users/self/media/recent?access_token=";
   }
-  /* <Route path='/movie/:id' render={(props) => <Details {...props} baseUrl={this.baseUrl} />} />
-          <Route path='/bookshow/:id' render={(props) => <BookShow {...props} baseUrl={this.baseUrl} />} />
-          <Route path='/confirm/:id' render={(props) => <Confirmation {...props} baseUrl={this.baseUrl} />} />
-          */
   render() {
     return (
       <Router>
         <div className="main-container">
           <Route exact path='/' render={(props) => <Login {...props} baseUrl={this.baseUrl} />} />
-          <Route exact path='/home/' render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
-          <Route exact path='/profile/' render={(props) => <Profile {...props} baseUrl={this.baseUrl} />} />
+          <Route exact path='/home' render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
+          <Route exact path='/profile' render={(props) => <Profile {...props} baseUrl={this.baseUrl} />} />
         </div>
       </Router>
     )
